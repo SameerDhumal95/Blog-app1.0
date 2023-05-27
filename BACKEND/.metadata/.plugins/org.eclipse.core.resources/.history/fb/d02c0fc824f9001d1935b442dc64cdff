@@ -1,0 +1,20 @@
+package com.codewithsameer.blog.repositories;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.codewithsameer.blog.entities.User;
+import com.codewithsameer.blog.payloads.UserDto;
+
+public interface UserRepo extends JpaRepository<User, Integer>{
+
+	
+	Optional<User> findByEmail(String email);
+
+	@Query("select u from userr u where u.name = ?1 and u.password = ?2")
+	UserDto findByUsernamePassword(String username, String password);
+	
+	
+}

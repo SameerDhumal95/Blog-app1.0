@@ -12,8 +12,74 @@ import {
   Row,
 } from "reactstrap";
 import Base from "../component/Base";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { loginUser } from "../service/user-service";
 
 const Login = () => {
+  const [login, setLogin] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (event, field) => {
+    setLogin({
+      ...login,
+      [field]: event.target.value,
+    });
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    console.log(login);
+    //validation
+    if (login.username == "" || login.password == "") {
+      toast.error("Username or Password is required!", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      return;
+    }
+
+    loginUser(login)
+      .then((response) => {
+        console.log(response);
+        toast.success("Login Successful!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        // sessionStorage.setItem("user", JSON.stringify(response));
+      })
+      .catch((error) => {
+        console.log(error);
+        if (
+          error.response.statusCode === 400 ||
+          error.response.statusCode === 404
+        ) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error("Somthing Wrong", {
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
+      });
+    setLogin({
+      username: "",
+      password: "",
+    });
+  };
+
+  const resetData = () => {
+    setLogin({
+      username: "",
+      password: "",
+    });
+    setLogin({
+      username: "",
+      password: "",
+    });
+
+    //submit data to server
+  };
+
   return (
     <Base>
       <Container>
@@ -26,11 +92,17 @@ const Login = () => {
 
               <CardBody>
                 {/* createing form */}
-                <Form>
+                <Form onSubmit={handleFormSubmit}>
                   {/* Email field */}
                   <FormGroup>
-                    <Label for="email">Username</Label>
-                    <Input type="email" placeholder="Enter here" id="email" />
+                    <Label for="text">Username</Label>
+                    <Input
+                      type="text"
+                      placeholder="Enter here"
+                      id="email"
+                      value={login.username}
+                      onChange={(e) => handleChange(e, "username")}
+                    />
                   </FormGroup>
 
                   {/* Password field */}
@@ -40,14 +112,24 @@ const Login = () => {
                       type="password"
                       placeholder="Enter here"
                       id="password"
+                      value={login.password}
+                      onChange={(e) => handleChange(e, "password")}
                     />
                   </FormGroup>
 
                   <Container className="text-center">
-                    <Button color="success">Login</Button>
-                    <Button color="primary" type="reset" className="ms-2">
+                    <Button onClick={handleFormSubmit} color="success">
+                      Login
+                    </Button>
+                    <Button
+                      onClick={resetData}
+                      color="primary"
+                      type="reset"
+                      className="ms-2"
+                    >
                       Reset
                     </Button>
+                    <ToastContainer />
                   </Container>
                 </Form>
               </CardBody>

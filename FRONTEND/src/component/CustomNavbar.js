@@ -87,15 +87,15 @@ const CustomNavbar = () => {
           </Nav>
 
           <Nav navbar>
-            {login && (
+            {/* {login && (
               <>
                 <NavItem>
-                  <NavLink>Logout</NavLink>
+                  <NavLink onClick={logout}>Logout</NavLink>
                 </NavItem>
               </>
             )}
 
-            {/* {!login && ( */}
+            {!login && ( */}
             <>
               <NavItem>
                 <NavLink tag={ReactLink} to="/login">

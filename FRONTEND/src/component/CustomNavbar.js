@@ -1,5 +1,5 @@
-// import { useContext } from "react";
-// import { useEffect } from "react";
+import { useContext } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { NavLink as ReactLink, useNavigate } from "react-router-dom";
 import {
@@ -15,33 +15,33 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-// import { doLogout, getCurrentUserDetail, isLoggedIn } from "../auth";
-// import userContext from "../context/userContext";
+import { doLogout, getCurrentUserDetail, isLoggedIn } from "../auth";
+//import userContext from "../context/userContext";
 
 const CustomNavbar = () => {
-  //   const userContextData = useContext(userContext);
+  //const userContextData = useContext(userContext);
   let navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState(undefined);
 
-  //   useEffect(() => {
-  //     setLogin(isLoggedIn());
-  //     setUser(getCurrentUserDetail());
-  //   }, [login]);
+  useEffect(() => {
+    setLogin(isLoggedIn());
+    setUser(getCurrentUserDetail());
+  }, [login]);
 
-  //   const logout = () => {
-  //     doLogout(() => {
-  //       //logged out
-  //       setLogin(false);
-  //       userContextData.setUser({
-  //         data: null,
-  //         login: false,
-  //       });
-
-  //       navigate("/");
+  // const logout = () => {
+  //   doLogout(() => {
+  //     //logged out
+  //     setLogin(false);
+  //     userContextData.setUser({
+  //       data: null,
+  //       login: false,
   //     });
-  //   };
+
+  //     navigate("/");
+  //   });
+  // };
 
   return (
     <div>
@@ -55,7 +55,7 @@ const CustomNavbar = () => {
           <Nav className="me-auto" navbar>
             <NavItem>
               <NavLink tag={ReactLink} to="/">
-                New Feed
+                Home
               </NavLink>
             </NavItem>
             <NavItem>
@@ -80,7 +80,7 @@ const CustomNavbar = () => {
                 <DropdownItem>Facebook</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>Youtube</DropdownItem>
-                <DropdownItem>Instagram</DropdownItem>
+                <DropdownItem>Github</DropdownItem>
                 <DropdownItem>LinkedIn</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
@@ -90,37 +90,25 @@ const CustomNavbar = () => {
             {login && (
               <>
                 <NavItem>
-                  <NavLink tag={ReactLink} to={`/user/profile-info/${user.id}`}>
-                    Profile Info
-                  </NavLink>
-                </NavItem>
-
-                <NavItem>
-                  <NavLink tag={ReactLink} to="/user/dashboard">
-                    {user.email}
-                  </NavLink>
-                </NavItem>
-
-                <NavItem>
-                  {/* <NavLink onClick={logout}>Logout</NavLink> */}
+                  <NavLink>Logout</NavLink>
                 </NavItem>
               </>
             )}
 
-            {!login && (
-              <>
-                <NavItem>
-                  <NavLink tag={ReactLink} to="/login">
-                    Login
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={ReactLink} to="/signup">
-                    Signup
-                  </NavLink>
-                </NavItem>
-              </>
-            )}
+            {/* {!login && ( */}
+            <>
+              <NavItem>
+                <NavLink tag={ReactLink} to="/login">
+                  Login
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={ReactLink} to="/signup">
+                  Signup
+                </NavLink>
+              </NavItem>
+            </>
+            {/* )} */}
           </Nav>
         </Collapse>
       </Navbar>

@@ -1,5 +1,5 @@
 import { signUp } from "../service/user-service";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   Card,
@@ -199,8 +199,6 @@ const Signup = () => {
                     >
                       Reset
                     </Button>
-
-                    <ToastContainer />
                   </Container>
                 </Form>
               </CardBody>

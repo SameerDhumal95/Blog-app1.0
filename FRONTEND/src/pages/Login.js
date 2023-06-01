@@ -13,10 +13,14 @@ import {
 } from "reactstrap";
 import Base from "../component/Base";
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { loginUser } from "../service/user-service";
+import { doLogin } from "../auth";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [login, setLogin] = useState({
     username: "",
     password: "",
@@ -33,7 +37,7 @@ const Login = () => {
     event.preventDefault();
     console.log(login);
     //validation
-    if (login.username == "" || login.password == "") {
+    if (login.username === "" || login.password === "") {
       toast.error("Username or Password is required!", {
         position: toast.POSITION.BOTTOM_CENTER,
       });
@@ -41,12 +45,19 @@ const Login = () => {
     }
 
     loginUser(login)
-      .then((response) => {
-        console.log(response);
+      .then((data) => {
+        console.log(data);
+
+        //save the data to localstorage
+        doLogin(data, () => {
+          console.log("Login details is saved to localstorage");
+          //redirect to user dashboard
+          navigate("/user/dashboard");
+        });
+
         toast.success("Login Successful!", {
           position: toast.POSITION.TOP_CENTER,
         });
-        // sessionStorage.setItem("user", JSON.stringify(response));
       })
       .catch((error) => {
         console.log(error);
@@ -129,7 +140,6 @@ const Login = () => {
                     >
                       Reset
                     </Button>
-                    <ToastContainer />
                   </Container>
                 </Form>
               </CardBody>

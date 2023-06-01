@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import Userdashboard from "./pages/user-routes/Userdashboard";
 import Privateroute from "./component/Privateroute";
 import Profileinfo from "./pages/user-routes/profileinfo";
+import "./App.css";
 
 function App() {
   return (

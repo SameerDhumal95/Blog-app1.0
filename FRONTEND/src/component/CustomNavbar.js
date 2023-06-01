@@ -22,9 +22,11 @@ const CustomNavbar = () => {
   //const userContextData = useContext(userContext);
   let navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState(undefined);
 
+  //for loading the component
   useEffect(() => {
     setLogin(isLoggedIn());
     setUser(getCurrentUserDetail());
@@ -87,28 +89,32 @@ const CustomNavbar = () => {
           </Nav>
 
           <Nav navbar>
-            {/* {login && (
+            {login && (
               <>
                 <NavItem>
-                  <NavLink onClick={logout}>Logout</NavLink>
+                  <NavLink>Logout</NavLink>
+                </NavItem>
+
+                <NavItem>
+                  <NavLink>{user}</NavLink>
                 </NavItem>
               </>
             )}
 
-            {!login && ( */}
-            <>
-              <NavItem>
-                <NavLink tag={ReactLink} to="/login">
-                  Login
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={ReactLink} to="/signup">
-                  Signup
-                </NavLink>
-              </NavItem>
-            </>
-            {/* )} */}
+            {!login && (
+              <>
+                <NavItem>
+                  <NavLink tag={ReactLink} to="/login">
+                    Login
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={ReactLink} to="/signup">
+                    Signup
+                  </NavLink>
+                </NavItem>
+              </>
+            )}
           </Nav>
         </Collapse>
       </Navbar>

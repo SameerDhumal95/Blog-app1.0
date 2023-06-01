@@ -92,11 +92,11 @@ const CustomNavbar = () => {
             {login && (
               <>
                 <NavItem>
-                  <NavLink>Logout</NavLink>
+                  <NavLink>Username : {user.email}</NavLink>
                 </NavItem>
 
                 <NavItem>
-                  <NavLink>{user}</NavLink>
+                  <NavLink>Logout</NavLink>
                 </NavItem>
               </>
             )}

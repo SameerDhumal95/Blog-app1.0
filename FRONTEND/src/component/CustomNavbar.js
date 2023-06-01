@@ -32,18 +32,19 @@ const CustomNavbar = () => {
     setUser(getCurrentUserDetail());
   }, [login]);
 
-  // const logout = () => {
-  //   doLogout(() => {
-  //     //logged out
-  //     setLogin(false);
-  //     userContextData.setUser({
-  //       data: null,
-  //       login: false,
-  //     });
+  const logout = () => {
+    doLogout(() => {
+      //logged out
+      setLogin(false); //remove data from local storage
 
-  //     navigate("/");
-  //   });
-  // };
+      //     userContextData.setUser({
+      //       data: null,
+      //       login: false,
+      //     });
+
+      navigate("/");
+    });
+  };
 
   return (
     <div>
@@ -92,11 +93,19 @@ const CustomNavbar = () => {
             {login && (
               <>
                 <NavItem>
-                  <NavLink>Username : {user.email}</NavLink>
+                  <NavLink tag={ReactLink} to="/user/dashboard">
+                    Username : {user.email}
+                  </NavLink>
                 </NavItem>
 
                 <NavItem>
-                  <NavLink>Logout</NavLink>
+                  <NavLink tag={ReactLink} to={"/user/profile"}>
+                    Profile
+                  </NavLink>
+                </NavItem>
+
+                <NavItem>
+                  <NavLink onClick={logout}>Logout</NavLink>
                 </NavItem>
               </>
             )}

@@ -8,6 +8,7 @@ import Services from "./pages/Services";
 import { ToastContainer } from "react-toastify";
 import Userdashboard from "./pages/user-routes/Userdashboard";
 import Privateroute from "./component/Privateroute";
+import Profileinfo from "./pages/user-routes/profileinfo";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/user" element={<Privateroute />}>
           <Route path="dashboard" element={<Userdashboard />} />
-          <Route path="profile" element={<profileinfo />} />
+          <Route path="profile" element={<Profileinfo />} />
         </Route>
       </Routes>
     </BrowserRouter>

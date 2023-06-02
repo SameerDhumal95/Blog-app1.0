@@ -10,8 +10,12 @@ import {
 } from "reactstrap";
 import { loadAllCategories } from "../service/category-service";
 import JoditEditor from "jodit-react";
-import { createPost as doCreatePost } from "../service/post-service";
+import {
+  createPost as doCreatePost,
+  uploadPostImage,
+} from "../service/post-service";
 import { getCurrentUserDetail } from "../auth";
+import { toast } from "react-toastify";
 
 const AddPost = () => {
   const editor = useRef(null);
@@ -29,7 +33,7 @@ const AddPost = () => {
     content: "",
     categoryId: "",
   });
-
+  const [image, setImage] = useState(null);
   //   const config = {
   //     placeholder: " Start typing...",
   //   };
@@ -63,33 +67,53 @@ const AddPost = () => {
 
   const createPost = (event) => {
     event.preventDefault();
-    console.log(post);
+    // console.log(post);
 
     if (post.title.trim() === "") {
-      alert("post title is required !!");
+      toast.error("post title is required !!");
       return;
     }
 
     if (post.content.trim() === "") {
-      alert("post content is required !!");
+      toast.error("post content is required !!");
       return;
     }
 
     if (post.categoryId === "") {
-      alert("select category!!");
+      toast.error("select category!!");
       return;
     }
 
     //submit the form on server
-    post["userId"] = user.id; //Not getting
+    post["userId"] = user.id;
     doCreatePost(post)
       .then((data) => {
-        alert("post created");
-        console.log(post);
+        uploadPostImage(image, data.postId)
+          .then((data) => {
+            toast.success("Image Uploaded !!");
+          })
+          .catch((error) => {
+            toast.error("Error in uploading image");
+            console.log(error);
+          });
+        setPost({
+          title: "",
+          content: "",
+          categoryId: "",
+        });
+        toast.success("Post Created !!");
+        // console.log(post);
       })
       .catch((error) => {
         console.log(error);
+        toast.error("Post not created due to some error !!");
       });
+  };
+
+  //handling file chagne event
+  const handleFileChange = (event) => {
+    console.log(event.target.files[0]);
+    setImage(event.target.files[0]);
   };
 
   return (
@@ -112,7 +136,7 @@ const AddPost = () => {
             </div>
 
             <div className="my-3">
-              <Label for="title">Post Content</Label>
+              <Label for="content">Post Content</Label>
               {/* <Input
                 type="textarea"
                 id="content"
@@ -123,9 +147,17 @@ const AddPost = () => {
               <JoditEditor
                 ref={editor}
                 value={post.content}
-                onChange={contentFieldChanged}
+                onChange={(newContent) => contentFieldChanged(newContent)}
               />
+            </div>
+            {/* file field  */}
 
+            <div className="mt-3">
+              <Label for="image">Select Post Image</Label>
+              <Input id="image" type="file" onChange={handleFileChange} />
+            </div>
+
+            <div className="mt-3">
               <Label for="category">Post Category</Label>
               <Input
                 id="category"
@@ -143,6 +175,7 @@ const AddPost = () => {
                 ))}
               </Input>
             </div>
+
             <Container className="text-center">
               <Button color="warning" type="submit">
                 Create Post

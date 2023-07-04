@@ -11,9 +11,9 @@ function Post({
     <Card className="border-0 shadow-sm mt-4">
       <CardBody>
         <h1>{post.title}</h1>
-        <CardText>
-          <p>{post.content.substring(0, 50)}...</p>
-        </CardText>
+        <CardText
+          dangerouslySetInnerHTML={{ __html: post.content.substring(0, 60) }}
+        ></CardText>
 
         <div>
           <Button>Read More</Button>

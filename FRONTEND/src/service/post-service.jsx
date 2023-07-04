@@ -26,6 +26,8 @@ export const uploadPostImage = (image, postId) => {
 };
 
 //load all posts
-export const loadAllPosts = () => {
-  return myAxios.get(`/api/posts`).then((response) => response.data);
+export const loadAllPosts = (pageNumber, pageSize) => {
+  return myAxios
+    .get(`/api/posts?pageNumber=${pageNumber}&pageSize=${pageSize}`)
+    .then((response) => response.data);
 };

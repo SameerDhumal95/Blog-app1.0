@@ -1,4 +1,4 @@
-import { useContext } from "react";
+//import { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { NavLink as ReactLink, useNavigate } from "react-router-dom";
@@ -58,7 +58,7 @@ const CustomNavbar = () => {
           <Nav className="me-auto" navbar>
             <NavItem>
               <NavLink tag={ReactLink} to="/">
-                Home
+                News Feed
               </NavLink>
             </NavItem>
             <NavItem>
